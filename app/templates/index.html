@@ -12,6 +12,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
     <!-- Ionicons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- DataTables -->
+    <link rel="stylesheet" type="text/css"
+          href="{{ url_for('static', filename='js/plugins/datatables/dataTables.bootstrap.css') }}">
     <!-- Theme style -->
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='AdminLTE/css/AdminLTE.min.css') }}">
     <!-- AdminLTE Skins. Choose a skin from the css/skins
@@ -175,7 +178,7 @@
                                 <!-- The user image in the navbar-->
                                 <img src="../../dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
                                 <!-- hidden-xs hides the username on small devices so only the image appears. -->
-                                <span class="hidden-xs">Alexander Pierce</span>
+                                <span class="hidden-xs">{{ user.username }}</span>
                             </a>
                             <ul class="dropdown-menu">
                                 <!-- The user image in the menu -->
@@ -226,7 +229,7 @@
             <!-- Content Header (Page header) -->
             <section class="content-header">
                 <h1>
-                    Top Navigation
+                    销售记录
                     <small>Example 2.0</small>
                 </h1>
                 <ol class="breadcrumb">
@@ -238,32 +241,118 @@
 
             <!-- Main content -->
             <section class="content">
-                <div class="callout callout-info">
-                    <h4>Tip!</h4>
-
-                    <p>Add the layout-top-nav class to the body tag to get this layout. This feature can also be used
-                        with a
-                        sidebar! So use this class if you want to remove the custom dropdown menus from the navbar and
-                        use regular
-                        links instead.</p>
-                </div>
-                <div class="callout callout-danger">
-                    <h4>Warning!</h4>
-
-                    <p>The construction of this layout differs from the normal one. In other words, the HTML markup of
-                        the navbar
-                        and the content will slightly differ than that of the normal layout.</p>
-                </div>
-                <div class="box box-default">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">Blank Box</h3>
+                <div class="box">
+                    <div class="box-header">
+                        <h3 class="box-title">
+                            <button type="button" class="btn btn-block btn-primary" data-toggle="modal"
+                                    data-target="#create_sale">新增销售记录
+                            </button>
+                        </h3>
                     </div>
+                    <div class="modal fade" id="create_sale" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">×</span></button>
+                                    <h4 class="modal-title" id="myModalLabel">新增销售记录</h4>
+                                </div>
+                                <form class="form-horizontal" action="/saleRecord/add" method="post">
+                                    <div class="modal-body">
+
+                                        <div class="box-body">
+                                            <div class="form-group">
+                                                <label for="product_type" class="col-sm-2 control-label">产品类型</label>
+                                                <div class="col-sm-10">
+                                                    <select class="form-control" id="product_type" name="product_id">
+                                                        {% for product in products %}
+                                                        <option value="{{ product.id }}">{{ product.type}}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="customer_phone" class="col-sm-2 control-label">客户手机</label>
+                                                <div class="col-sm-10">
+                                                    <input name="customer_phone" type="text" class="form-control" id="customer_phone" placeholder="客户手机号">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="customer_name" class="col-sm-2 control-label">客户姓名</label>
+                                                <div class="col-sm-10">
+                                                    <input name="customer_name" type="text" class="form-control" id="customer_name" placeholder="客户姓名">
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <!-- /.box-body -->
+
+
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">关闭
+                                        </button>
+                                        <button type="submit" class="btn btn-primary">保存</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- /.box-header -->
                     <div class="box-body">
-                        The great content goes here
+                        <table id="example1" class="table table-bordered table-striped">
+                            <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>产品类型</th>
+                                <th>客户号码</th>
+                                <th>客户姓名</th>
+                                <th>销售时间</th>
+                                <th>奖励金</th>
+                                <th>审核状态</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for sale_record in sale_records %}
+                            <tr>
+                                <td>{{ sale_record.id }}</td>
+                                <td>{{ sale_record.get_product().type }}</td>
+                                <td>{{ sale_record.customer_phone }}</td>
+                                <td>{{ sale_record.customer_name }}</td>
+                                <td>{{ sale_record.time }}</td>
+                                <td>{{ sale_record.award }}</td>
+                                <td>
+                                    {% if sale_record.valid == 1 %}
+                                    <span class="label label-success">审核通过</span>
+                                    {% elif sale_record.valid == -1 %}
+                                    <span class="label label-danger">审核不通过</span>
+                                    {% else %}
+                                    <span class="label label-warning">待审核</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+                            <tfoot>
+                            <tr>
+                                <th>ID</th>
+                                <th>产品类型</th>
+                                <th>客户手机号</th>
+                                <th>客户姓名</th>
+                                <th>销售时间</th>
+                                <th>奖励金</th>
+                                <th>审核状态</th>
+                            </tr>
+                            </tfoot>
+                        </table>
                     </div>
                     <!-- /.box-body -->
                 </div>
-                <!-- /.box -->
+
             </section>
             <!-- /.content -->
         </div>
@@ -284,6 +373,7 @@
 </div>
 <!-- ./wrapper -->
 
+
 <!-- jQuery 2.2.3 -->
 <script type="text/javascript" src="{{ url_for('static', filename='js/plugins/jQuery/jquery-2.2.3.min.js')}}"></script>
 
@@ -291,13 +381,36 @@
 <script type="text/javascript" src="{{ url_for('static', filename='bootstrap/js/bootstrap.min.js')}}"></script>
 
 <!-- SlimScroll -->
-<script type="text/javascript" src="{{ url_for('static', filename='js/plugins/slimScroll/jquery.slimscroll.min.js')}}"></script>
+<script type="text/javascript"
+        src="{{ url_for('static', filename='js/plugins/slimScroll/jquery.slimscroll.min.js')}}"></script>
+
+<!-- DataTables -->
+<script type="text/javascript"
+        src="{{ url_for('static', filename='js/plugins/datatables/jquery.dataTables.min.js')}}"></script>
+<script type="text/javascript"
+        src="{{ url_for('static', filename='js/plugins/datatables/dataTables.bootstrap.min.js')}}"></script>
+
 
 <!-- FastClick -->
 <script src="../../plugins/fastclick/fastclick.js"></script>
+
+
 <!-- AdminLTE App -->
 <script src="../../dist/js/app.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="../../dist/js/demo.js"></script>
+<script>
+    $(function () {
+        $("#example1").DataTable();
+        $('#example2').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": false,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false
+        });
+    });
+</script>
 </body>
 </html>

@@ -5,7 +5,7 @@ from flask_login import UserMixin
 from .. import login_manager, db
 
 
-class User(db.Model):
+class User(UserMixin, db.Model):
     __tablename__ = 'app_user'
     id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     username = db.Column(db.String(64), unique=True)
@@ -18,24 +18,14 @@ class User(db.Model):
 
 
 
-    def is_authenticated(self):
-        return True
-
-    def is_active(self):
-        return True
-
-    def is_anonymous(self):
-        return False
-
-    def get_id(self):
-        return self.id
-
     """密码生成和验证"""
     def hash_password(self, password):
         self.password_hash = pwd_context.encrypt(password)
 
     def verify_password(self, password):
         return pwd_context.verify(password, self.password)
+
+
 
 
 @login_manager.user_loader
