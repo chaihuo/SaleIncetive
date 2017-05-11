@@ -3,4 +3,4 @@
 venv
 log
 migrations
-
+config.py

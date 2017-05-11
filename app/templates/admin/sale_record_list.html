@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>营业员销售激励系统</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- Bootstrap 3.3.7 -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- DataTables -->
+    <link rel="stylesheet" type="text/css"
+          href="{{ url_for('static', filename='js/plugins/datatables/dataTables.bootstrap.css') }}">
+    <!-- Theme style -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='AdminLTE/css/AdminLTE.min.css') }}">
+    <!-- AdminLTE Skins. Choose a skin from the css/skins
+         folder instead of downloading all of them to reduce the load. -->
+    <link rel="stylesheet" type="text/css"
+          href="{{ url_for('static', filename='AdminLTE/css/skins/_all-skins.min.css') }}">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+
+    <header class="main-header">
+        <!-- Logo -->
+        <a href="/" class="logo">
+            <!-- mini logo for sidebar mini 50x50 pixels -->
+            <span class="logo-mini"><b>A</b>LT</span>
+            <!-- logo for regular state and mobile devices -->
+            <span class="logo-lg"><b>Admin</b>LTE</span>
+        </a>
+        <!-- Header Navbar: style can be found in header.less -->
+        <nav class="navbar navbar-static-top">
+            <!-- Sidebar toggle button-->
+            <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </a>
+
+            <div class="navbar-custom-menu">
+                <ul class="nav navbar-nav">
+
+                    <!-- User Account: style can be found in dropdown.less -->
+                    <li class="dropdown user user-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <img src="{{ url_for('static', filename='img/user2-160x160.jpg')}}" class="user-image" alt="User Image">
+                            <span class="hidden-xs">{{admin}}</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <!-- User image -->
+                            <li class="user-header">
+                                <img src="{{ url_for('static', filename='img/user2-160x160.jpg')}}" class="img-circle" alt="User Image">
+
+                                <p>
+                                    {{admin}}
+                                    <small></small>
+                                </p>
+                            </li>
+                            <!-- Menu Body -->
+                            <li class="user-body">
+                                <div class="row">
+                                    <div class="col-xs-4 text-center">
+                                        <a href="#">Followers</a>
+                                    </div>
+                                    <div class="col-xs-4 text-center">
+                                        <a href="#">Sales</a>
+                                    </div>
+                                    <div class="col-xs-4 text-center">
+                                        <a href="#">Friends</a>
+                                    </div>
+                                </div>
+                                <!-- /.row -->
+                            </li>
+                            <!-- Menu Footer-->
+                            <li class="user-footer">
+                                <div class="pull-left">
+                                    <a href="#" class="btn btn-default btn-flat">Profile</a>
+                                </div>
+                                <div class="pull-right">
+                                    <a href="/logout" class="btn btn-default btn-flat">退出</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                    <!-- Control Sidebar Toggle Button -->
+                    <li>
+                        <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <!-- Left side column. contains the logo and sidebar -->
+    <aside class="main-sidebar">
+        <!-- sidebar: style can be found in sidebar.less -->
+        <section class="sidebar">
+            <!-- Sidebar user panel -->
+            <div class="user-panel">
+                <div class="pull-left image">
+                    <img src="{{ url_for('static', filename='img/user2-160x160.jpg')}}" class="img-circle" alt="User Image">
+                </div>
+                <div class="pull-left info">
+                    <p>{{admin}}</p>
+                    <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+                </div>
+            </div>
+            <!-- search form -->
+            <form action="#" method="get" class="sidebar-form">
+                <div class="input-group">
+                    <input type="text" name="q" class="form-control" placeholder="Search...">
+                    <span class="input-group-btn">
+                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
+                </button>
+              </span>
+                </div>
+            </form>
+            <!-- /.search form -->
+            <!-- sidebar menu: : style can be found in sidebar.less -->
+            <ul class="sidebar-menu">
+                <li class="header">MAIN NAVIGATION</li>
+                <li class='active'>
+                    <a href="/admin/sale_records">
+                        <i class="fa fa-th"></i> <span>销售记录</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/admin/products">
+                        <i class="fa fa-table"></i> <span>电信产品</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/admin/awards">
+                        <i class="fa fa-pie-chart"></i> <span>激励金</span>
+                    </a>
+                </li>
+            </ul>
+        </section>
+        <!-- /.sidebar -->
+    </aside>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>
+                销售记录
+                <small></small>
+            </h1>
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="box">
+                        <div class="box-header">
+                            <h3 class="box-title">销售记录详情</h3>
+
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            <table class="table table-hover table-bordered table-striped" id="example1">
+                                <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>产品类型</th>
+                                    <th>客户号码</th>
+                                    <th>客户姓名</th>
+                                    <th>销售人</th>
+                                    <th>销售时间</th>
+                                    <th>奖励金</th>
+                                    <th>审核状态</th>
+                                    <th>操作</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for sale_record in sale_records %}
+                                <tr>
+                                    <td>{{ sale_record.id }}</td>
+                                    <td>{{ sale_record.get_product().type }}</td>
+                                    <td>{{ sale_record.customer_phone }}</td>
+                                    <td>{{ sale_record.customer_name }}</td>
+                                    <td>{{ sale_record.get_user().username }}</td>
+                                    <td>{{ sale_record.time }}</td>
+                                    <td>{{ sale_record.award }}</td>
+                                    <td>
+                                        {% if sale_record.valid == 1 %}
+                                        <span class="label label-success">审核通过</span>
+                                        {% elif sale_record.valid == -1 %}
+                                        <span class="label label-danger">审核不通过</span>
+                                        {% else %}
+                                        <span class="label label-warning">待审核</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <a id="agree" class="btn btn-default agree"><i class="fa fa-check"></i></a>
+                                        <a id="disagree" class="btn btn-default disagree"><i class="fa fa-close"></i></a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                    <!-- /.box -->
+                </div>
+            </div>
+
+            <!-- /.row -->
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+    <footer class="main-footer">
+        <div class="pull-right hidden-xs">
+            <b>Version</b> 0.0.1
+        </div>
+        <strong>Copyright © 2014-2017 <a href="#">北京电信</a>.</strong> All rights
+        reserved.
+    </footer>
+
+
+    <!-- Add the sidebar's background. This div must be placed
+         immediately after the control sidebar -->
+    <div class="control-sidebar-bg"></div>
+</div>
+<!-- ./wrapper -->
+<!-- jQuery 2.2.3 -->
+<script type="text/javascript" src="{{ url_for('static', filename='js/plugins/jQuery/jquery-2.2.3.min.js')}}"></script>
+
+<!-- Bootstrap 3.3.7 -->
+<script type="text/javascript" src="{{ url_for('static', filename='bootstrap/js/bootstrap.min.js')}}"></script>
+
+<!-- SlimScroll -->
+<script type="text/javascript"
+        src="{{ url_for('static', filename='js/plugins/slimScroll/jquery.slimscroll.min.js')}}"></script>
+
+<!-- DataTables -->
+<script type="text/javascript"
+        src="{{ url_for('static', filename='js/plugins/datatables/jquery.dataTables.min.js')}}"></script>
+<script type="text/javascript"
+        src="{{ url_for('static', filename='js/plugins/datatables/dataTables.bootstrap.min.js')}}"></script>
+
+<!-- FastClick -->
+<script src="../../plugins/fastclick/fastclick.js"></script>
+<!-- AdminLTE App -->
+<script src="../../dist/js/app.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="../../dist/js/demo.js"></script>
+<!-- page script -->
+<script>
+
+    $(function () {
+//        $("#example1").DataTable();
+        $('#example1').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": false,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false
+        });
+        $(".agree").click(function(){
+            var status = $(this).parent().parent().children();
+            console.log(status)
+            $.ajax({
+               type: 'POST',
+                url: '/admin/sale_records/check',
+                data: {
+                   'id': status.first().text(),
+                    'valid': 1
+                },
+                success: function (data) {
+//                    alert(data);
+                    status.eq(7).children().replaceWith("<span class='label label-success'>审核通过</span>")
+                }
+            });
+        });
+
+        $(".disagree").click(function(){
+            var status = $(this).parent().parent().children();
+            $.ajax({
+               type: 'POST',
+                url: '/admin/sale_records/check',
+                data: {
+                   'id': status.first().text(),
+                    'valid': -1
+                },
+                success: function (data) {
+                    status.eq(7).children().replaceWith("<span class='label label-danger'>审核不通过</span>")
+                }
+            });
+
+        });
+    });
+</script>
+</body>
+</html>

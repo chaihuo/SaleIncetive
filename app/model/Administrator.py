@@ -19,8 +19,7 @@ class Administrator(db.Model):
     def get_id(self):
         return self.id
 
+    def verify_password(self, password):
+        return password == self.password
 
-# Create user loader function
-@login_manager.user_loader
-def load_user(administrator_id):
-    return db.session.query(Administrator).get(administrator_id)
+

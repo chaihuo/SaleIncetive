@@ -28,13 +28,13 @@
 
 <div class="login-box">
     <div class="login-logo">
-        <a href="../../index2.html"><b>销售激励系统</b></a>
+        <a href="#"><b>销售激励系统</b></a>
     </div>
     <!-- /.login-logo -->
     <div class="login-box-body">
         <p class="login-box-msg">欢迎登录</p>
 
-        <form action="/auth/login" method="post">
+        <form action="/login" method="post">
             <div class="form-group has-feedback">
                 <input type="username" class="form-control" placeholder="用户名" name="username">
                 <span class="glyphicon glyphicon-user form-control-feedback"></span>
@@ -47,13 +47,12 @@
                 <div class="col-xs-6">
                     <div class="checkbox icheck">
                         <label>
-                            <input type="checkbox"> 记住我
+                            <input type="checkbox" name="remember_me"> 记住我
                         </label>
                     </div>
                 </div>
                 <!-- /.col -->
                 <div class="col-xs-6">
-                    <!--<button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>-->
                     <a href="#">忘记密码</a><br>
                 </div>
                 <!-- /.col -->
@@ -64,7 +63,7 @@
                 <button type="submit" class="btn btn-block btn-social btn-facebook btn-flat">
                     登录
                 </button>
-                <a href="/auth/register" class="btn btn-block btn-social btn-google btn-flat">注册</a>
+                <a href="/register" class="btn btn-block btn-social btn-google btn-flat">注册</a>
             </div>
             <!-- /.social-auth-links -->
         </form>
