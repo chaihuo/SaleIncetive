@@ -15,9 +15,9 @@ class SaleRecord(db.Model):
     valid = db.Column(db.Integer, default=0)  # 0待审核， 1审核通过， -1审核不通过
     award = db.Column(db.Float)
 
-    # def get_user(self):
-    #     user = User.query.get(self.user_id)
-    #     return user
+    def get_user(self):
+        user = User.query.get(self.user_id)
+        return user
 
 
     def get_product(self):
