@@ -166,9 +166,15 @@ def award_stat():
 
 
     award_sum_by_product = db.session.query(SaleRecord.product_id, func.sum(SaleRecord.award), func.count('*')).filter(SaleRecord.valid == 1).group_by(SaleRecord.product_id).order_by(SaleRecord.award.desc()).all()
+    award_product_list = []
     for item in award_sum_by_product:
-        print item[0], item[1], item[2]
-    return render_template('admin/award_stat.html', award_user_list=award_user_list, admin='admin')
+        award_product = {}
+        award_product['product'] = Product.query.get(item[0]).type
+        award_product['award'] = item[1]
+        award_product['num'] = item[2]
+        print award_product
+        award_product_list.append(award_product)
+    return render_template('admin/award_stat.html', award_user_list=award_user_list, award_product_list=award_product_list, admin='admin')
 
 
 
