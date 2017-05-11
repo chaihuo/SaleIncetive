@@ -276,6 +276,7 @@
         });
         $(".agree").click(function(){
             var status = $(this).parent().parent().children();
+            console.log(status)
             $.ajax({
                type: 'POST',
                 url: '/admin/sale_records/check',
@@ -284,8 +285,8 @@
                     'valid': 1
                 },
                 success: function (data) {
-                    alert(data);
-                    status.eq(6).children().replaceWith("<span class='label label-success'>审核通过</span>")
+//                    alert(data);
+                    status.eq(7).children().replaceWith("<span class='label label-success'>审核通过</span>")
                 }
             });
         });
@@ -300,7 +301,7 @@
                     'valid': -1
                 },
                 success: function (data) {
-                    status.eq(6).children().replaceWith("<span class='label label-danger'>审核不通过</span>")
+                    status.eq(7).children().replaceWith("<span class='label label-danger'>审核不通过</span>")
                 }
             });
 
